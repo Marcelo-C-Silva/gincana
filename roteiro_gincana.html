@@ -1,0 +1,345 @@
+<style>
+:root {
+  --bg-main: #f8fafc;
+  --surface-1: #ffffff;
+  --surface-2: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --primary: #6366f1;
+  --primary-light: #e0e7ff;
+  
+  /* Cores das Equipes */
+  --eq-davi: #fef3c7; --eq-davi-txt: #92400e;
+  --eq-rute: #dcfce7; --eq-rute-txt: #166534;
+  --eq-ester: #f3e8ff; --eq-ester-txt: #6b21a8;
+  --eq-jonas: #e0f2fe; --eq-jonas-txt: #0369a1;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { background: var(--bg-main); }
+
+.w { 
+  max-width: 680px; 
+  margin: 2rem auto; 
+  padding: 0 1.5rem; 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--text-primary);
+}
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* Box Equipes */
+.eq-box { 
+  background: var(--surface-1); 
+  border: 1px solid var(--border);
+  border-radius: 16px; 
+  padding: 1.5rem; 
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
+}
+.eq-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: .25rem; display: flex; align-items: center; gap: 6px; }
+.eq-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.25rem; }
+.eq-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.eq-card { border-radius: 10px; padding: .75rem; text-align: center; transition: transform 0.2s; }
+.eq-card:hover { transform: translateY(-2px); }
+.eq-card .en { font-size: 14px; font-weight: 600; }
+.eq-card .ep { font-size: 11px; margin-top: 2px; opacity: 0.85; }
+
+.ea { background: var(--eq-davi); color: var(--eq-davi-txt); }
+.eb { background: var(--eq-rute); color: var(--eq-rute-txt); }
+.ec { background: var(--eq-ester); color: var(--eq-ester-txt); }
+.ed { background: var(--eq-jonas); color: var(--eq-jonas-txt); }
+
+.lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 1rem 4px; }
+
+/* Timeline */
+.timeline { display: flex; flex-direction: column; }
+.bloco { display: flex; gap: 0; }
+.bl { display: flex; flex-direction: column; align-items: center; width: 65px; flex-shrink: 0; }
+.bh { font-size: 13px; font-weight: 600; color: var(--text-muted); padding-top: 14px; white-space: nowrap; }
+.bd { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 19px; position: relative; z-index: 2; box-shadow: 0 0 0 4px var(--bg-main); }
+.bline { flex: 1; width: 2px; background: var(--border); margin-top: 6px; min-height: 32px; }
+.bloco:last-child .bline { display: none; }
+.br { flex: 1; padding: 0 0 1.5rem 12px; }
+
+/* Cards Cronograma */
+.card { 
+  background: var(--surface-1); 
+  border: 1px solid var(--border); 
+  border-radius: 14px; 
+  padding: 1rem 1.25rem; 
+  cursor: pointer; 
+  transition: all .2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.card:hover { border-color: var(--border-strong); background: #fafafa; }
+.card.open { border-color: var(--primary); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.05); }
+.ch { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ct { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.02em; }
+
+/* Cores das Tags */
+.tg { background: #fee2e2; color: #991b1b; }
+.te { background: #ccfbf1; color: #115e59; }
+.ti { background: var(--surface-2); color: var(--text-secondary); }
+
+.cn { font-size: 14.5px; font-weight: 600; color: var(--text-primary); flex: 1; min-width: 150px; }
+.cd { font-size: 12px; font-weight: 500; color: var(--text-muted); background: var(--surface-2); padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+
+/* Conteúdo Expandido */
+.cb { 
+  display: none; 
+  margin-top: 1rem; 
+  padding-top: 1rem; 
+  border-top: 1px solid var(--border); 
+  font-size: 13.5px; 
+  color: var(--text-secondary); 
+  line-height: 1.6; 
+}
+.card.open .cb { display: block; animation: fadeIn 0.2s ease; }
+.cb strong { color: var(--text-primary); font-weight: 600; }
+
+/* Alertas e Dicas */
+.tip, .warn { 
+  margin-top: 12px; 
+  padding: 10px 12px; 
+  border-radius: 8px; 
+  font-size: 12.5px; 
+  line-height: 1.5;
+}
+.tip { background: #eff6ff; color: #1e40af; border-left: 3px solid #3b82f6; }
+.warn { background: #fff7ed; color: #9a3412; border-left: 3px solid #f97316; }
+
+.hint { font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 10px; display: flex; align-items: center; gap: 4px; justify-content: flex-end; }
+.hint::after { content: '→'; display: inline-block; transition: transform 0.2s; }
+.card.open .hint::after { transform: rotate(90deg); }
+
+/* Placar / Pontuação */
+.placar-box { 
+  background: var(--surface-1); 
+  border: 1px solid var(--border);
+  border-radius: 16px; 
+  padding: 1.5rem; 
+  margin-top: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.pg { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 1rem; }
+.pi { 
+  background: var(--surface-2); 
+  border: 1px solid transparent;
+  border-radius: 10px; 
+  padding: .6rem .875rem; 
+  font-size: 12.5px; 
+  color: var(--text-secondary); 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+.pv { font-weight: 700; color: var(--primary); background: #ffffff; padding: 2px 8px; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width: 480px) {
+  .eq-grid { grid-template-columns: repeat(2, 1fr); }
+  .ch { gap: 6px; }
+  .cd { order: -1; }
+}
+</style>
+
+<div class="w">
+  <h2 class="sr-only">Roteiro ajustado para 16 jovens — 4 equipes de 4, área externa, manhã de 4 horas.</h2>
+
+  <div class="eq-box">
+    <div class="eq-title">4 equipes de 4 jovens cada</div>
+    <div class="eq-sub">Com 16 pessoas, cada equipe tem 4 membros — todos participam de tudo, ninguém fica de fora em nenhuma prova.</div>
+    <div class="eq-grid">
+      <div class="eq-card ea"><div class="en">Davi</div><div class="ep">4 jovens</div></div>
+      <div class="eq-card eb"><div class="en">Rute</div><div class="ep">4 jovens</div></div>
+      <div class="eq-card ec"><div class="en">Ester</div><div class="ep">4 jovens</div></div>
+      <div class="eq-card ed"><div class="en">Jonas</div><div class="ep">4 jovens</div></div>
+    </div>
+  </div>
+
+  <div class="lbl">Programação — 4 horas de manhã</div>
+
+  <div class="timeline">
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">08h00</div><div class="bd" style="background:#10b981"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct te">Abertura</span><span class="cn">Chegada, divisão e grito de guerra</span><span class="cd">20 min</span></div>
+          <div class="cb">
+            Receba com música. Papeizinhos coloridos na entrada definem as equipes. Cada time tem 5 min para: escolher um líder, criar um grito de guerra e se apresentar para o grupo.<br><br>
+            <strong>Ajuste para 4 por equipe:</strong> Com grupos pequenos, o grito fica mais fácil de criar e mais engraçado de apresentar — dê liberdade total, vale dança, coreografia, o que vier.
+            <div class="tip">Anuncie a tabela de pontos agora — incluindo os pontos por espírito esportivo e criatividade. Muda a forma de competir desde o início.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">08h20</div><div class="bd" style="background:#ef4444"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct tg">Gincana</span><span class="cn">Nó humano + Bingo das conexões</span><span class="cd">25 min</span></div>
+          <div class="cb">
+            <strong>Nó humano (8 min):</strong> Com 4 por equipe, o nó é mais rápido — faça 2 rodadas para compensar. Na segunda rodada, vale tentar sem falar. Melhor tempo acumulado pontua.<br><br>
+            <strong>Bingo das conexões (17 min):</strong> Cartela 3x3 (9 características) em vez de 4x4 — mais ágil para grupos pequenos. Os jovens circulam pelo campo inteiro, misturando as equipes. Quem completar o cartão pontua +3 para sua equipe.
+            <div class="tip">Com 16 pessoas o bingo é mais íntimo — todo mundo acaba conhecendo todo mundo de verdade, não só superficialmente.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">08h45</div><div class="bd" style="background:#ef4444"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct tg">Gincana</span><span class="cn">Estafeta com desafios — versão 4 por equipe</span><span class="cd">25 min</span></div>
+          <div class="cb">
+            <strong>Ajuste para 4 membros:</strong> Em vez de 5 estações com 1 por pessoa, use 4 estações — cada membro da equipe corre uma. Equipes disputam simultaneamente; menos tempo = mais pontos.<br><br>
+            <strong>4 estações:</strong><br>
+            1. Correr com bola de tênis entre os joelhos até a bandeira e voltar<br>
+            2. Responder 1 pergunta bíblica ao líder da estação (sem a equipe ajudar)<br>
+            3. Arrastar um colega deitado em lençol por 5 metros (2 pessoas se revezam)<br>
+            4. Equilibrar garrafa d'água na cabeça por 10 passos sem cair<br><br>
+            <strong>Tempo estimado por rodada:</strong> 5–6 min. Faça 2 rodadas com ordens diferentes para cada equipe.
+            <div class="tip">Com equipes de 4, todos correm em cada rodada — ninguém espera sentado. O ritmo é bem mais intenso que em grupos grandes.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">09h10</div><div class="bd" style="background:#ef4444"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct tg">Gincana</span><span class="cn">Missão fotográfica no campo</span><span class="cd">40 min</span></div>
+          <div class="cb">
+            <strong>Como funciona:</strong> Cada equipe recebe 8 missões fotográficas (reduzido de 10 — mais focado para grupos de 4). 30 min para fotografar + 10 min de apresentação rápida com votação da plateia.<br><br>
+            <strong>8 fotos para área externa:</strong><br>
+            1. Torre humana da equipe toda<br>
+            2. Todos fingindo rezar em lugares diferentes simultaneamente<br>
+            3. Escrever uma palavra com os corpos deitados no chão<br>
+            4. Imitação criativa de Jonas na baleia<br>
+            5. Foto "capa de álbum gospel" da equipe<br>
+            6. Algo na natureza que represente gratidão — com legenda falada na apresentação<br>
+            7. Corrente humana com os 4 tocando os ombros in linha<br>
+            8. Foto espontânea de alguém ajudando outro sem pedir — bônus se for de outra equipe
+            <div class="tip">A foto 8 — espontânea — vale pontos bônus e costuma virar a favorita do grupo inteiro. Vale a pena destacar isso antes de soltar as equipes.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">09h50</div><div class="bd" style="background:#64748b"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct ti">Intervalo</span><span class="cn">Água, lanche e placar parcial dramático</span><span class="cd">15 min</span></div>
+          <div class="cb">
+            Hidratação obrigatória antes da guerra de água. Anuncie o placar parcial com suspense — "após 3 provas, quem lidera é..." — mantém a tensão alta.<br><br>
+            <strong>Dica com 16 pessoas:</strong> Com grupos pequenos, qualquer jovem que ainda não está engajado de verdade ficará visível aqui. É um bom momento para um líder conversar individualmente se perceber alguém de fora.
+            <div class="warn">Sol forte em área externa: tenha água à disposição em todas as provas, não só no intervalo.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">10h05</div><div class="bd" style="background:#ef4444"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct tg">Gincana</span><span class="cn">Guerra de água — "guardai o tesouro"</span><span class="cd">35 min</span></div>
+          <div class="cb">
+            <strong>Regras:</strong> Cada equipe defende uma garrafa pet com farinha no seu quadrante. Objetivo: molhar as garrafas adversárias sem deixar a sua ser molhada. Sem mangueiras — só balões d'água e copos.<br><br>
+            <strong>Ajuste para 4 por equipe:</strong> Com grupos menores, a batalha é mais intensa — todo mundo participa de perto, não tem como ficar escondido. Isso é ótimo! Delimite bem os 4 quadrantes no campo para que ninguém invada o território adversário com contato físico.<br><br>
+            <strong>Tempo:</strong> 20 min de batalha + 5 min de avaliação das garrafas + 10 min para secar e reorganizar antes da próxima prova.
+            <div class="tip">Avise antes do evento: roupas velhas ou troca de roupa. O nome "guardai o tesouro" (Mt 6:21) transforma a bagunça em algo com propósito — mencione na explicação das regras.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">10h40</div><div class="bd" style="background:#ef4444"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct tg">Gincana</span><span class="cn">Batalha de louvor — versão íntima</span><span class="cd">30 min</span></div>
+          <div class="cb">
+            <strong>Ajuste para 4 por equipe:</strong> Dê 8 min de ensaio em vez de 5 — com só 4 pessoas, precisam de um pouco mais de tempo para combinar. Cada equipe apresenta por ~5–6 min.<br><br>
+            Com grupos pequenos, a batalha de louvor fica mais corajosa — não tem como se esconder atrás do grupo grande. Isso faz as apresentações serem mais pessoais e autênticas.<br><br>
+            <strong>Avaliação:</strong> Criatividade, letra (se adaptada), entrosamento e "poder de fé" — critério do júri que sempre gera debate hilário. Júri: 1 líder + 1 jovem de cada equipe que não está apresentando.
+            <div class="tip">Com 16 jovens, a plateia também é pequena — o clima é mais de sarau íntimo do que show. Isso costuma deixar os tímidos mais à vontade para participar de verdade.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">11h10</div><div class="bd" style="background:#10b981"></div><div class="bline"></div></div>
+      <div class="br">
+        <div class="card" onclick="tog(this)">
+          <div class="ch"><span class="ct te">Encerramento</span><span class="cn">Placar + afirmação em voz alta + oração</span><span class="cd">30 min</span></div>
+          <div class="cb">
+            <strong>Revelação do placar (8 min):</strong> Contagem regressiva dramática, torcida, suspense. Campeã recebe troféu simbólico improvisado — quanto mais exagerado melhor. Parabenize todas as equipes.<br><br>
+            <strong>Afirmação coletiva em voz alta (17 min):</strong> Com só 16 pessoas, dá perfeitamente para fazer em roda ao vivo. Cada jovem segura seu papel em branco. A roda passa o papel de pessoa em pessoa — cada um escreve uma palavra ou qualidade. Ao final, o papel volta ao dono.<br><br>
+            Diferente de grupos grandes, aqui o líder pode propor que cada pessoa <em>leia em voz alta</em> uma das palavras que recebeu e agradeça quem escreveu. Cria um momento muito bonito de reconhecimento mútuo.<br><br>
+            <strong>Oração de envio (5 min):</strong> Em roda, o líder abre e convida quem quiser a dizer uma frase de gratidão antes de fechar.
+            <div class="tip">Com 16 pessoas a afirmação em voz alta cabe nos 17 minutos e é muito mais emotiva do que só ler em silêncio. Esse costuma ser o momento que as pessoas levam guardado.</div>
+          </div>
+          <div class="hint">Ver detalhes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <div class="bl"><div class="bh">11h40</div><div class="bd" style="background:#cbd5e1"></div></div>
+      <div class="br"><div style="font-size:13px; font-weight: 500; color:var(--text-muted); padding-top:14px; padding-left: 4px;">Fim do evento — Todos de volta</div></div>
+    </div>
+
+  </div>
+
+  <div class="placar-box">
+    <div style="font-size:15px; font-weight:600; color:var(--text-primary); margin-bottom:.25rem;">Sistema de pontuação</div>
+    <div style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:.5rem;">Anuncie no início — gera estratégia e engajamento desde o primeiro minuto.</div>
+    <div class="pg">
+      <div class="pi"><span>1º lugar na prova</span><span class="pv">10 pts</span></div>
+      <div class="pi"><span>2º lugar</span><span class="pv">7 pts</span></div>
+      <div class="pi"><span>3º lugar</span><span class="pv">4 pts</span></div>
+      <div class="pi"><span>4º lugar</span><span class="pv">2 pts</span></div>
+      <div class="pi"><span>Bônus criatividade</span><span class="pv">+3 pts</span></div>
+      <div class="pi"><span>Melhor grito de guerra</span><span class="pv">+2 pts</span></div>
+      <div class="pi"><span>Pontualidade</span><span class="pv">+2 pts</span></div>
+      <div class="pi"><span>Espírito esportivo</span><span class="pv">+5 pts</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(card){
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.card.open').forEach(c => {
+    c.classList.remove('open');
+    c.querySelector('.hint').textContent = 'Ver detalhes';
+  });
+  if(!isOpen){
+    card.classList.add('open');
+    card.querySelector('.hint').textContent = 'Fechar';
+  }
+}
+</script>
